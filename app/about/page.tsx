@@ -1,329 +1,392 @@
+// app/about/page.tsx
 'use client';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ShieldCheck, Globe, Recycle, Award, MapPin, Phone, Mail, MessageCircle, Send, Building2, Truck, Sparkles, Star, Compass, TrendingUp, Layers, CheckCircle2, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  MapPin, ShieldCheck, Globe2, Award, Users, 
+  TrendingUp, Sparkles, ArrowRight, CheckCircle2, Factory,
+  Building2, Sparkle, FlaskConical, FileCheck, Anchor
+} from 'lucide-react';
 
-const aboutImages = [
+const WHATSAPP_NUMBER = "94777537538";
+
+const aboutSlides = [
   {
-    url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop',
-    title: 'Global Sourcing Operations',
-    subtitle: 'Yiwu & Guangzhou Supply Chain Hubs'
+    src: "/images/about-headquarters.jpg",
+    badge: "STRATEGIC GLOBAL MANAGEMENT & OPERATIONS HUB",
+    title: "Executive Corporate Headquarters"
   },
   {
-    url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1200&auto=format&fit=crop',
-    title: 'State-of-the-Art Logistics',
-    subtitle: 'Tianjin & Beijing Port Distribution'
+    src: "/images/about-quality-lab.jpg",
+    badge: "HIGH-TECH QUALITY TESTING LAB",
+    title: "100% Pre-Shipment Density & Tensile Testing"
   },
   {
-    url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop',
-    title: 'Advanced Packaging Machinery',
-    subtitle: 'Cangzhou & Taizhou Production Centers'
+    src: "/images/about-logistics-port.jpg",
+    badge: "GLOBAL MARITIME SHIPPING & LOGISTICS",
+    title: "Direct Supply Chain Lines to Asia & Sri Lanka"
   }
 ];
 
-export default function About() {
-  const [currentImgIndex, setCurrentImgIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export default function AboutPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto Slider for About Images (Every 4 Seconds)
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImgIndex((prev) => (prev + 1) % aboutImages.length);
+    const slideTimer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % aboutSlides.length);
     }, 4000);
-    return () => clearInterval(timer);
+    return () => clearInterval(slideTimer);
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-blue-600 selection:text-white relative overflow-hidden">
+    <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 overflow-hidden">
       
-      {/* Top Bar Info */}
-      <div className="bg-slate-950/95 text-slate-300 text-xs py-3 px-6 sm:px-12 border-b border-slate-800/80 hidden md:flex justify-between items-center tracking-wide relative z-20 backdrop-blur-md">
-        <div className="flex items-center gap-8">
-          <span className="flex items-center gap-2 hover:text-blue-400 transition cursor-pointer"><Phone size={14} className="text-blue-500 animate-pulse" /> +94 77 753 7538</span>
-          <span className="flex items-center gap-2 hover:text-blue-400 transition cursor-pointer"><Mail size={14} className="text-blue-500" /> info@primeaxis.com</span>
-        </div>
-        <div>
-          <span className="bg-gradient-to-r from-blue-600/30 to-indigo-600/30 text-blue-400 border border-blue-500/40 px-3.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">Global Sourcing Hub</span>
-        </div>
+      {/* 1. Header Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center max-w-3xl mx-auto space-y-4"
+      >
+        <motion.span 
+          whileHover={{ scale: 1.05 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-100 text-sky-800 text-xs font-bold shadow-sm"
+        >
+          <Sparkles className="w-4 h-4 text-sky-600 animate-spin" /> Who We Are
+        </motion.span>
+        
+        <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+          Over 15 Years of Industrial Packaging Mastery
+        </h1>
+        
+        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
+          Global trade and technical bridge connecting world-class petrochemical refiners with Sri Lanka and Asian industrial markets.
+        </p>
+      </motion.div>
+
+      {/* 2. Hero Section styled exactly like Home Page slideshow */}
+      <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 sm:p-12 border border-slate-100 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        {/* Left Side Details */}
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="lg:col-span-6 space-y-6"
+        >
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-600 text-xs font-bold uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5" /> OUR CORE MISSION
+          </span>
+
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            Engineered for Precision & Global Reliability
+          </h2>
+
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+            Founded with a vision to streamline complex supply chains, Prime Axis supplies high-purity polymer raw materials (LDPE, LLDPE, HDPE, PP, PET), protective stretch films, industrial BOPP adhesive tapes, and cutting-edge machinery.
+          </p>
+
+          <div className="space-y-3 pt-2">
+            {[
+              "Direct alliances with top Petrochemical refineries (SABIC, ExxonMobil, DOW).",
+              "100% quality inspection prior to port dispatch.",
+              "End-to-end custom packaging and machinery procurement."
+            ].map((point, idx) => (
+              <motion.div 
+                key={idx}
+                whileHover={{ x: 5 }}
+                className="flex items-start gap-3 text-xs sm:text-sm text-slate-700 font-medium"
+              >
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                <span>{point}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="pt-2">
+            <motion.a 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=` + encodeURIComponent("Hello Prime Axis, I would like to learn more about your company services.")}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-extrabold text-xs sm:text-sm shadow-lg hover:shadow-sky-500/30 transition-all"
+            >
+              Connect with Our Leadership <ArrowRight className="w-4 h-4" />
+            </motion.a>
+          </div>
+        </motion.div>
+
+        {/* Right Side Image Card with Auto-rotating Slideshow */}
+        {/* Right Side Image Card with Auto-rotating Slideshow */}
+<motion.div 
+  initial={{ opacity: 0, x: 30 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.8 }}
+  className="lg:col-span-6"
+>
+  <div className="relative overflow-hidden rounded-2xl bg-slate-100 h-80 sm:h-96 flex items-center justify-center shadow-2xl group border border-slate-200">
+    <AnimatePresence mode="wait">
+      <motion.img 
+        key={currentSlide}
+        src={aboutSlides[currentSlide].src} 
+        alt={aboutSlides[currentSlide].title} 
+        initial={{ opacity: 0, scale: 1.05 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+      />
+    </AnimatePresence>
+
+    {/* Bright/Light Text Gradient Container at the bottom */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+    
+    <div className="relative z-10 p-6 text-center text-white space-y-2 mt-auto">
+      <span className="text-[10px] font-mono bg-sky-600/90 px-3 py-1 rounded-full uppercase tracking-widest border border-white/20 shadow-md">
+        {aboutSlides[currentSlide].badge}
+      </span>
+      <h3 className="text-xl sm:text-2xl font-black tracking-wide pt-1 drop-shadow-md">
+        {aboutSlides[currentSlide].title}
+      </h3>
+    </div>
+
+    {/* Slider Dots */}
+    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      {aboutSlides.map((_, idx) => (
+        <button
+          key={idx}
+          onClick={() => setCurrentSlide(idx)}
+          className={`h-2 rounded-full transition-all duration-300 ${
+            currentSlide === idx ? "w-6 bg-sky-500" : "w-2 bg-white/70"
+          }`}
+        />
+      ))}
+    </div>
+  </div>
+</motion.div>
+
       </div>
 
-      {/* Header / Navbar */}
-      <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <Link href="/" className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-600 text-white font-black text-2xl px-4 py-2 rounded-2xl tracking-wider shadow-lg shadow-blue-500/25 transform hover:scale-105 transition duration-300 border border-blue-400/30">
-              PRIME AXIS
-            </Link>
-          </div>
-          <nav className="hidden md:flex space-x-10 font-semibold text-sm text-slate-700">
-            <Link href="/" className="hover:text-blue-600 transition hover:-translate-y-0.5 duration-200">Home</Link>
-            <Link href="/about" className="text-blue-600 font-bold transition">About Us</Link>
-            <Link href="/products" className="hover:text-blue-600 transition hover:-translate-y-0.5 duration-200">Products</Link>
-            <Link href="/machinery" className="hover:text-blue-600 transition hover:-translate-y-0.5 duration-200">Machinery</Link>
-            <Link href="/contact" className="hover:text-blue-600 transition hover:-translate-y-0.5 duration-200">Contact</Link>
-          </nav>
-          <div>
-            <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-6 py-3 rounded-2xl text-sm font-bold shadow-xl shadow-emerald-600/20 transition duration-300 flex items-center gap-2 transform hover:-translate-y-1 hover:scale-105 border border-emerald-400/30">
-              <MessageCircle size={18} className="animate-pulse" /> Quick WhatsApp Quote
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* 3. Company Statistics & Impact Highlights */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        {[
+          { label: "Years of Industry Mastery", value: "15+", icon: Award },
+          { label: "Global Sourcing Hubs", value: "07", icon: Building2 },
+          { label: "Annual Polymer Volume", value: "50,000+ MT", icon: TrendingUp },
+          { label: "Satisfied Enterprise Clients", value: "500+", icon: Users }
+        ].map((stat, i) => (
+          <motion.div 
+            key={i}
+            whileHover={{ y: -6, borderColor: "#0284c7" }}
+            className="bg-white p-6 rounded-3xl border border-slate-200 shadow-lg text-center space-y-2 transition-all"
+          >
+            <div className="w-12 h-12 mx-auto rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold">
+              <stat.icon className="w-6 h-6" />
+            </div>
+            <h3 className="text-3xl font-black text-slate-900 font-mono">{stat.value}</h3>
+            <p className="text-xs text-slate-500 font-medium">{stat.label}</p>
+          </motion.div>
+        ))}
+      </motion.div>
 
-      {/* Hero Banner with Animated Ambient Orbs */}
-      <section className="relative text-white py-24 lg:py-32 border-b border-slate-800 overflow-hidden bg-slate-950 flex items-center">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000 scale-105"
-          style={{ backgroundImage: `url('${aboutImages[currentImgIndex].url}')` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-blue-950/80"></div>
-        </div>
-
-        {/* Ambient Glow Lights */}
-        <div className="absolute top-1/4 right-10 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 text-center relative z-10">
-          <span className="text-blue-300 text-xs font-bold uppercase tracking-widest bg-blue-500/20 border border-blue-400/30 px-5 py-2.5 rounded-full shadow-lg shadow-blue-500/10 mb-8 inline-flex items-center gap-2 backdrop-blur-md animate-bounce">
-            <Sparkles size={14} className="text-blue-400 animate-spin" /> Who We Are
+      {/* 4. Step-by-Step Global Supply Chain Process */}
+      <section className="space-y-10">
+        <div className="text-center max-w-2xl mx-auto space-y-3">
+          <span className="text-xs font-bold uppercase tracking-widest text-sky-600 bg-sky-50 px-3 py-1 rounded-full">
+            Supply Chain Mastery
           </span>
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-tight drop-shadow-2xl">
-            Connecting Global Supply to a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-sky-300">Sustainable Future</span>
-          </h1>
-          <p className="text-lg sm:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal drop-shadow">
-            Prime Axis (Yiwu Bozhou Import & Export Co., Ltd.) is a premier global sourcing and packaging solutions company backed by over 15 years of industry excellence.
+          <h2 className="text-3xl font-extrabold text-slate-900">How We Guarantee Quality & Efficiency</h2>
+          <p className="text-slate-600 text-sm">A rigorous 4-step process from global petrochemical refineries directly to your factory door.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              step: "01",
+              title: "Direct Refinery Sourcing",
+              desc: "Direct procurement contracts with tier-1 refineries ensuring virgin grade purity.",
+              icon: Factory
+            },
+            {
+              step: "02",
+              title: "Rigorous Lab Inspection",
+              desc: "Melt Flow Index (MFI) & Tensile Strength testing at our China testing hubs.",
+              icon: FlaskConical
+            },
+            {
+              step: "03",
+              title: "Hub Warehousing",
+              desc: "Safe storage and palletization at Yiwu, Guangzhou, and Tianjin hubs.",
+              icon: Building2
+            },
+            {
+              step: "04",
+              title: "Customs & Port Logistics",
+              desc: "Seamless customs clearance and doorstep container shipping.",
+              icon: Anchor
+            }
+          ].map((proc, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.12 }}
+              whileHover={{ y: -6, borderColor: "#0284c7" }}
+              className="bg-white p-6 rounded-3xl border border-slate-200 shadow-lg space-y-4 relative transition-all"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-3xl font-black text-sky-600 font-mono">{proc.step}</span>
+                <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center">
+                  <proc.icon className="w-5 h-5" />
+                </div>
+              </div>
+              <h3 className="font-bold text-base text-slate-900">{proc.title}</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">{proc.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. Quality Compliance & Global Standards */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl"
+      >
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-sky-400 bg-slate-800 px-3 py-1 rounded-full">
+            Certified Excellence
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold">International Quality Standards & Compliance</h2>
+          <p className="text-slate-400 text-xs">All products supplied adhere strictly to worldwide industrial packaging regulations.</p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {[
+            { title: "ISO 9001:2015", subtitle: "Quality Management Certified" },
+            { title: "FDA Approved", subtitle: "Food Grade Compliance" },
+            { title: "REACH & RoHS", subtitle: "Eco & Chemical Safe Standards" },
+            { title: "ASTM Certified", subtitle: "High Tensile Film Strength" }
+          ].map((cert, idx) => (
+            <div key={idx} className="bg-slate-800/90 border border-slate-700/80 p-5 rounded-2xl text-center space-y-2">
+              <FileCheck className="w-6 h-6 text-sky-400 mx-auto" />
+              <h4 className="font-bold text-sm text-white">{cert.title}</h4>
+              <p className="text-[10px] text-slate-400">{cert.subtitle}</p>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* 6. Corporate Core Values */}
+      <section className="space-y-10">
+        <div className="text-center max-w-2xl mx-auto space-y-3">
+          <span className="text-xs font-bold uppercase tracking-widest text-sky-600 bg-sky-50 px-3 py-1 rounded-full">
+            Our Guiding Principles
+          </span>
+          <h2 className="text-3xl font-extrabold text-slate-900">Built on Trust, Integrity & Innovation</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: "Quality Integrity",
+              desc: "100% prime virgin materials verified through lab tests before shipment.",
+              icon: ShieldCheck
+            },
+            {
+              title: "Global Agility",
+              desc: "Rapid logistics across Yiwu, Guangzhou, Tianjin, and international ports.",
+              icon: Globe2
+            },
+            {
+              title: "Technical Expertise",
+              desc: "15+ years of guidance on extrusion machinery and polymer grades.",
+              icon: Factory
+            },
+            {
+              title: "Sustainable Future",
+              desc: "Promoting recyclable PET/PP resins and low-carbon footprint materials.",
+              icon: Sparkle
+            }
+          ].map((val, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ y: -6 }}
+              className="bg-white p-6 rounded-3xl border border-slate-200 shadow-md space-y-4 hover:shadow-xl transition-all"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                <val.icon className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-lg text-slate-900">{val.title}</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">{val.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. Regional Operational Sourcing Hubs Section */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="bg-slate-900 text-white rounded-3xl p-8 sm:p-14 space-y-10 shadow-2xl relative overflow-hidden"
+      >
+        <div className="text-center max-w-2xl mx-auto space-y-3 relative z-10">
+          <span className="text-xs font-bold uppercase tracking-widest text-sky-400 bg-slate-800 px-3 py-1 rounded-full">
+            Regional Footprint
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold">Our Operational Sourcing Hubs</h2>
+          <p className="text-slate-400 text-xs sm:text-sm">
+            Strategically located infrastructure managing factory audits, quality verification, and export logistics.
           </p>
         </div>
-      </section>
 
-      {/* Main Story & Auto-Changing 3D Image Showcase Grid */}
-      <section className="py-24 bg-white relative z-10">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* Left Corporate Narrative */}
-            <div className="lg:col-span-6">
-              <span className="text-blue-600 text-xs font-bold uppercase tracking-widest bg-blue-50 border border-blue-100 px-4 py-2 rounded-full shadow-sm">Our Legacy</span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mt-6 mb-6 tracking-tight leading-tight">
-                15+ Years of Trust & Global Supply Chain Expertise
-              </h2>
-              <p className="text-slate-600 text-lg mb-6 leading-relaxed">
-                We bridge high-grade polymer raw materials, finished flexible packaging materials, and advanced industrial machinery from world-class manufacturing plants to markets worldwide.
-              </p>
-              <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-                Headquartered with major operations across Yiwu, Guangzhou, Tianjin, Beijing, Cangzhou, and Taizhou, our strategically placed hubs ensure comprehensive market coverage, meticulous quality inspection, and competitive pricing.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="bg-slate-50 border border-slate-200/80 p-6 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 transition duration-300">
-                  <div className="p-4 bg-blue-100/80 text-blue-600 rounded-2xl shadow-inner"><Building2 size={28} /></div>
-                  <div>
-                    <div className="font-extrabold text-slate-900 text-2xl">6+</div>
-                    <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Strategic Hubs</div>
-                  </div>
-                </div>
-                <div className="bg-slate-50 border border-slate-200/80 p-6 rounded-2xl flex items-center gap-4 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 transition duration-300">
-                  <div className="p-4 bg-blue-100/80 text-blue-600 rounded-2xl shadow-inner"><Truck size={28} /></div>
-                  <div>
-                    <div className="font-extrabold text-slate-900 text-2xl">Worldwide</div>
-                    <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Export Coverage</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Side: Auto-Changing 3D Image Showcase Card (Fills Gap Perfectly) */}
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 bg-slate-900 group h-[480px] flex items-end">
-                
-                {/* Auto Sliding Background Images */}
-                {aboutImages.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out ${
-                      idx === currentImgIndex ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
-                    }`}
-                    style={{ backgroundImage: `url('${img.url}')` }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                  </div>
-                ))}
-
-                {/* Floating Top Badge */}
-                <div className="absolute top-6 left-6 z-20">
-                  <span className="bg-slate-950/80 backdrop-blur-md text-blue-400 border border-blue-500/30 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 shadow-xl">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                    Live Sourcing Operations
-                  </span>
-                </div>
-
-                {/* Bottom Overlay Info Box */}
-                <div className="relative z-20 p-8 w-full bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent pt-12">
-                  <h3 className="text-2xl sm:text-3xl font-black text-white mb-2 tracking-tight transition-all duration-500">
-                    {aboutImages[currentImgIndex].title}
-                  </h3>
-                  <p className="text-slate-300 text-sm mb-6 flex items-center gap-2 font-medium">
-                    <MapPin size={16} className="text-blue-400 shrink-0" />
-                    {aboutImages[currentImgIndex].subtitle}
-                  </p>
-
-                  {/* Carousel Progress Indicators */}
-                  <div className="flex items-center gap-3">
-                    {aboutImages.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentImgIndex(idx)}
-                        className={`h-2.5 rounded-full transition-all duration-500 ${
-                          idx === currentImgIndex ? 'w-10 bg-blue-500 shadow-md shadow-blue-500/50' : 'w-2.5 bg-white/40'
-                        }`}
-                        aria-label={`Slide ${idx + 1}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Core Values Section */}
-      <section className="py-24 bg-slate-100/80 border-t border-slate-200/80 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-blue-600 text-xs font-bold uppercase tracking-widest bg-blue-50 border border-blue-100 px-4 py-2 rounded-full shadow-sm">Guiding Principles</span>
-            <h2 className="text-4xl font-black text-slate-900 mt-6 mb-3 tracking-tight">Our Core Values</h2>
-            <p className="text-slate-600 text-lg">The pillars that define our commitment to clients and suppliers globally.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group bg-white p-10 rounded-[2.5rem] border border-slate-200/80 shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition duration-500 flex flex-col justify-between">
-              <div>
-                <div className="w-16 h-16 bg-blue-50 group-hover:bg-blue-600 text-blue-600 group-hover:text-white rounded-2xl flex items-center justify-center mb-8 shadow-inner transition duration-300 transform group-hover:rotate-6">
-                  <ShieldCheck size={36} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">Integrity</h3>
-                <p className="text-slate-600 text-base leading-relaxed">We conduct business with complete honesty, full transparency, and uncompromising ethical standards.</p>
-              </div>
-            </div>
-
-            <div className="group bg-white p-10 rounded-[2.5rem] border border-slate-200/80 shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition duration-500 flex flex-col justify-between">
-              <div>
-                <div className="w-16 h-16 bg-blue-50 group-hover:bg-blue-600 text-blue-600 group-hover:text-white rounded-2xl flex items-center justify-center mb-8 shadow-inner transition duration-300 transform group-hover:rotate-6">
-                  <Globe size={36} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">Global Partnerships</h3>
-                <p className="text-slate-600 text-base leading-relaxed">We build long-lasting, mutually beneficial relationships with world-class polymer and machinery manufacturers.</p>
-              </div>
-            </div>
-
-            <div className="group bg-white p-10 rounded-[2.5rem] border border-slate-200/80 shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition duration-500 flex flex-col justify-between">
-              <div>
-                <div className="w-16 h-16 bg-blue-50 group-hover:bg-blue-600 text-blue-600 group-hover:text-white rounded-2xl flex items-center justify-center mb-8 shadow-inner transition duration-300 transform group-hover:rotate-6">
-                  <Recycle size={36} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4">Sustainability</h3>
-                <p className="text-slate-600 text-base leading-relaxed">Promoting recyclable polymers and energy-efficient packaging machinery for a cleaner, greener planet.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* WhatsApp Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-[2.5rem] max-w-lg w-full p-10 shadow-2xl relative border border-slate-100 animate-in fade-in zoom-in duration-300">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-black text-slate-900">Inquire via WhatsApp</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600 font-bold text-2xl bg-slate-100 w-10 h-10 rounded-full flex items-center justify-center transition hover:rotate-90 duration-300">✕</button>
-            </div>
-            <p className="text-slate-600 text-base mb-8 leading-relaxed">Contact our global sourcing team directly for immediate assistance and customized quotes.</p>
-            <a 
-              href="https://wa.me/94777537538?text=Hello%20Prime%20Axis%20Team%2C%20I%20would%20like%20to%20know%20more%20about%20your%20company%20and%20services." 
-              target="_blank" 
-              rel="noreferrer"
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-emerald-600/30 transition transform hover:scale-105 duration-300"
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4 relative z-10">
+          {[
+            { city: "Yiwu", role: "Small Commodities" },
+            { city: "Guangzhou", role: "Machinery & Polymers" },
+            { city: "Tianjin", role: "Export Port" },
+            { city: "Beijing", role: "Corporate Sourcing" },
+            { city: "Cangzhou", role: "Plastic Moulding" },
+            { city: "Taizhou", role: "Precision Tooling" },
+            { city: "Linyi", role: "Logistic Hub" }
+          ].map((hub, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              whileHover={{ scale: 1.08, borderColor: "#38bdf8", backgroundColor: "rgba(30, 41, 59, 0.9)" }}
+              className="bg-slate-800/80 border border-slate-700/80 p-4 rounded-2xl text-center space-y-2 transition-all cursor-pointer group"
             >
-              <Send size={20} /> Open WhatsApp Chat
-            </a>
-          </div>
+              <motion.div 
+                whileHover={{ rotate: 15 }}
+                className="w-10 h-10 mx-auto rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center"
+              >
+                <MapPin className="w-5 h-5" />
+              </motion.div>
+              <h4 className="font-black text-white text-sm group-hover:text-sky-300 transition-colors">{hub.city}</h4>
+              <p className="text-[10px] text-slate-400 leading-tight">{hub.role}</p>
+            </motion.div>
+          ))}
         </div>
-      )}
-
-      {/* Professional Multi-Column Footer */}
-      <footer className="bg-slate-950 text-slate-300 pt-20 pb-12 border-t border-slate-800 text-sm relative z-10">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            
-            {/* Company Info Column */}
-            <div>
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-xl px-4 py-2 rounded-xl inline-block tracking-wider mb-6 shadow-md border border-blue-400/30">
-                PRIME AXIS
-              </div>
-              <p className="text-slate-400 leading-relaxed mb-6">
-                Connecting global supply to a sustainable future with premium packaging products, polymer raw materials, and modern machinery.
-              </p>
-              <div className="text-xs text-slate-500 font-medium">
-                Yiwu Bozhou Import & Export Co., Ltd.
-              </div>
-            </div>
-
-            {/* Quick Links Column */}
-            <div>
-              <h4 className="text-white font-bold text-base mb-6 uppercase tracking-wider">Quick Links</h4>
-              <ul className="space-y-3 text-slate-400">
-                <li><Link href="/" className="hover:text-blue-400 transition hover:translate-x-1 inline-block duration-200">Home</Link></li>
-                <li><Link href="/about" className="hover:text-blue-400 transition hover:translate-x-1 inline-block duration-200">About Us</Link></li>
-                <li><Link href="/products" className="hover:text-blue-400 transition hover:translate-x-1 inline-block duration-200">Products Catalog</Link></li>
-                <li><Link href="/machinery" className="hover:text-blue-400 transition hover:translate-x-1 inline-block duration-200">Packaging Machinery</Link></li>
-                <li><Link href="/contact" className="hover:text-blue-400 transition hover:translate-x-1 inline-block duration-200">Contact Us</Link></li>
-              </ul>
-            </div>
-
-            {/* Product Divisions Column */}
-            <div>
-              <h4 className="text-white font-bold text-base mb-6 uppercase tracking-wider">Business Divisions</h4>
-              <ul className="space-y-3 text-slate-400">
-                <li><Link href="/products" className="hover:text-blue-400 transition text-left hover:translate-x-1 inline-block duration-200">Polymer Raw Materials</Link></li>
-                <li><Link href="/products" className="hover:text-blue-400 transition text-left hover:translate-x-1 inline-block duration-200">Packaging Products</Link></li>
-                <li><Link href="/products" className="hover:text-blue-400 transition text-left hover:translate-x-1 inline-block duration-200">Adhesive & BOPP Tapes</Link></li>
-                <li><Link href="/machinery" className="hover:text-blue-400 transition text-left hover:translate-x-1 inline-block duration-200">Industrial Machinery</Link></li>
-              </ul>
-            </div>
-
-            {/* Global Offices & Contact Column */}
-            <div>
-              <h4 className="text-white font-bold text-base mb-6 uppercase tracking-wider">Contact Info</h4>
-              <ul className="space-y-4 text-slate-400">
-                <li className="flex items-center gap-3">
-                  <Phone size={18} className="text-blue-500 shrink-0" />
-                  <span>+94 77 753 7538</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Mail size={18} className="text-blue-500 shrink-0" />
-                  <span>info@primeaxis.com</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <MapPin size={18} className="text-blue-500 shrink-0 mt-1" />
-                  <span>Global Operations in Yiwu, Guangzhou, Tianjin & Beijing</span>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-
-          <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-            <p>© 2026 Prime Axis Packaging Technologies. All rights reserved.</p>
-            <div className="flex gap-6">
-              <span className="hover:text-slate-400 transition cursor-pointer">Privacy Policy</span>
-              <span className="hover:text-slate-400 transition cursor-pointer">Terms of Service</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      </motion.div>
 
     </div>
   );
