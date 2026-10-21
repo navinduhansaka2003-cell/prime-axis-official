@@ -1,16 +1,12 @@
 // app/layout.tsx
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import './globals.css';
-import { Box, Phone, Mail, MessageSquare, Camera } from 'lucide-react';
+import { Box, Phone, Mail, MessageSquare, Camera, Menu, X } from 'lucide-react';
 
 const WHATSAPP_NUMBER = "94777537538";
 const WHATSAPP_DISPLAY = "+94 77 753 7538";
 const COMPANY_EMAIL = "info@primeaxis.com";
-
-export const metadata = {
-  title: 'Prime Axis Packaging Technologies',
-  description: 'Polymer Raw Materials & Packaging Sourcing Hub',
-};
 
 interface ImagePlaceholderProps {
   title: string;
@@ -32,6 +28,8 @@ const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({ title, resolution =
 );
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <html lang="en">
       <body className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-sky-500 selection:text-white">
@@ -60,9 +58,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         {/* Navigation Bar */}
-        <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
+        <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-20">
+              
+              {/* Brand Logo */}
               <a href="/" className="flex items-center gap-3 text-left">
                 <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-sky-600 via-blue-700 to-indigo-800 p-0.5 shadow-md">
                   <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
@@ -77,6 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
               </a>
 
+              {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-1 bg-slate-100 p-1.5 rounded-full border border-slate-200">
                 <a href="/" className="px-5 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-white transition-all">Home</a>
                 <a href="/about" className="px-5 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-white transition-all">About Us</a>
@@ -85,17 +86,85 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <a href="/contact" className="px-5 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-white transition-all">Contact Us</a>
               </nav>
 
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=` + encodeURIComponent("Hello Prime Axis team, I would like an instant quote.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-lg flex items-center gap-2 hover:scale-105 transition-all"
-              >
-                <MessageSquare className="w-4 h-4" />
-                WhatsApp Quote
-              </a>
+              {/* Right Side Buttons & Mobile Toggle */}
+              <div className="flex items-center gap-3">
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=` + encodeURIComponent("Hello Prime Axis team, I would like an instant quote.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:flex px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-lg items-center gap-2 hover:scale-105 transition-all"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  WhatsApp Quote
+                </a>
+
+                {/* Mobile Menu Toggle Button (Hamburger) */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="md:hidden p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 transition-all border border-slate-200"
+                  aria-label="Toggle Mobile Menu"
+                >
+                  {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+              </div>
+
             </div>
           </div>
+
+          {/* Mobile Dropdown Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-xl">
+              <nav className="flex flex-col space-y-2">
+                <a 
+                  href="/" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                >
+                  Home
+                </a>
+                <a 
+                  href="/about" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                >
+                  About Us
+                </a>
+                <a 
+                  href="/products" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                >
+                  Products & Tech
+                </a>
+                <a 
+                  href="/sourcing" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                >
+                  Global Sourcing
+                </a>
+                <a 
+                  href="/contact" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-xl text-sm font-bold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-all"
+                >
+                  Contact Us
+                </a>
+              </nav>
+
+              <div className="pt-2 border-t border-slate-100">
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=` + encodeURIComponent("Hello Prime Axis team, I would like an instant quote.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-lg flex items-center justify-center gap-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  WhatsApp Quote
+                </a>
+              </div>
+            </div>
+          )}
         </header>
 
         <main>{children}</main>
